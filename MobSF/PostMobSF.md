@@ -39,7 +39,7 @@ pip install ‐r requirements.txt ‐‐user
 O comando a seguir permite que você rode o MobSF:
 
 ```
-python manage.py runserver <PORT>
+python manage.py runserver
 ```
 
 Ao executar esse comando o mesmo irá gerar um Token (esse token sempre será o mesmo na máquina onde ele estiver), o token será utilizado para que possamos fazer a análise via API, portanto, é importante deixa-lo guardado.
@@ -58,13 +58,13 @@ git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
 
 Assim que o repositório for clonado, entre na pasta do mesmo, e execute os comandos a seguir:
 ```
-docker build -t mobsf_docker .
-docker run -i -t -p 8000:8000 opensecurity/mobsf:latest
+docker build -t mobsf .
+docker run -it -p 8000:8000 mobsf
 ```
 ou
 ```
-docker pull opensecurity/mobsf
-docker run -i -t -p 8000:8000 opensecurity/mobsf:latest
+docker pull opensecurity/mobile-security-framework-mobsf
+docker run -it -p 8000:8000 opensecurity/mobile-security-framework-mobsf:latest
 ```
 
 ### REST API
