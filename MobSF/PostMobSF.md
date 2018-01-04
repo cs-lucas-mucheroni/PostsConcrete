@@ -91,6 +91,8 @@ curl -X POST --url http://localhost:8000/api/v1/delete_scan --data "hash=<hash>"
 ```
 
 ### POC do MobSF com GitlabCI
+Antes de qualquer coisa acesse o **[link](Link do blog do Leandro)** para saber como colocar o mesmo pra rodar.
+
 Foi criado três jobs, cada job foi feito um script para acessar a API.
 Primeiros passos é configurar as variaveis que serão utilizadas, nesse caso, o Token, e a url do MobSF, segue abaixo os passos para a criação das variaveis:
 Projects >> Settings >> Pipelines >> Add new variable
