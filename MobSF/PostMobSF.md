@@ -22,14 +22,14 @@ A ferramenta pode ser utilizada via API, e será mostrado aqui nesse documento.
 
 Para funcionar e rodar MobSF com sucesso, os próximos passos terão que ser seguidos e as ferramentas que deverão estar instaladas:
 
-Faça o download do Oracle JDK 1.7 (ou superior) - Java JDK Download  
+Faça o download do Oracle JDK 1.7 (ou superior) - **[Java JDK Download](http://www.oracle.com/technetwork/java/javase/downloads/index.html)**  
 Faça o git clone do repositório do MobSF, o mesmo estará alguns scripts que precisarão ser executados. Logo após entre no repositório (como mostra abaixo).
 
 ```
 git clone https://github.com/MobSF/Mobile‐Security‐Framework‐MobSF.git
 cd Mobile‐Security‐Framework‐MobSF
 ```
-Faça a instalação do Python, pois os scripts são em Python, e rode o comando em seguida para que as dependencias possam ser instaladas, siga os passos abaixo:
+Faça a **[instalação do Python](https://www.python.org/downloads/)** (2.7 ou superior), pois os scripts são em Python, e rode o comando em seguida para que as dependencias possam ser instaladas, siga os passos abaixo:
 
 ```
 sudo apt install build‐essential libssl‐dev libffi‐dev python‐dev
