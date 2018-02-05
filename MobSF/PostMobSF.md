@@ -3,33 +3,30 @@
 
 ![MobSF](images/logo_MobSF.png)
 
-### Introdução
+Você já ouviu falar na Mobile Security Framework? É uma ferramenta do MobSF que analisa a APK e verifica a vulnerabilidade dela. Se vcoê quiser saber mais, neste post vou mostrar como funciona, a instalação e como usar, além de como subir uma imagem em Docker e usar REST API, e uma POC em Gitlab CI.
 
-Opa galera, beleza ? :v:  
+### O que é o MobSF?
 
-O objetivo desse post é apresentar a ferramenta do MobSF, mostrar como funciona, instalação e como usar, o mesmo será apresentado como subir uma imagem em docker, utilizar REST API, e uma POC em Gitlab CI.
+Como já falei ali em cima, MobSF é uma ferramenta que analisa a APK e verifica a vulnerabilidae dela.  
+Com ela podemos fazer tanto a análise estática quanto a dinâmica. Na estática, podemos realizar revisão de código,  detectar permissão e configurações, verificar ssl overriding, ssl bypass, criptografia fraca, códigos ofuscados, permissões impróprias, segredos codificados, uso indevido de API e armazenamento inseguro de arquivos.
 
-### O que é?
+O analisador dinâmico, por sua vez, executa o aplicativo em uma máquina virtual ou em um dispositivo configurado e detecta os problemas em tempo de execução. Uma análise mais aprofundada é feita nos pacotes de rede capturados, tráfego HTTPS desencrito, despejos de aplicativos, registros, relatórios de erros ou falhas, informações de depuração, rastreamento de pilha e os recursos do aplicativo, como definir arquivos, preferências e bancos de dados.
 
-O MobSF é uma ferramenta que analisa a APK verificando a vulnerabilidade do mesmo.  
-Com ele podemos fazer tanto a análise estática, quanto a análise dinâmica. A análise estática é capaz de realizar revisão de código,  detectar permissão, configurações, sendo possivel verificar ssl overriding, ssl bypass, criptografia fraca, códigos ofuscados, permissões impróprias, segredos codificados, uso indevido de API, e armazenamento inseguro de arquivos.  
-O analisador dinâmico executa o aplicativo em uma máquina virtual ou em um dispositivo configurado e detecta os problemas em tempo de execução. Uma análise mais aprofundada é feita nos pacotes de rede capturados, tráfego HTTPS desencrito, despejos de aplicativos, registros, relatórios de erros ou falhas, informações de depuração, rastreamento de pilha e os recursos do aplicativo, como definir arquivos, preferências e bancos de dados.  
-Esta estrutura é altamente escalável e você pode adicionar suas regras personalizadas com facilidade. Um relatório rápido e limpo pode ser gerado no final dos testes.
-A ferramenta pode ser utilizada tanto para Android e IOS, suportando o binário (APK e IPA), e códigos fontes compactados.
-A ferramenta pode ser utilizada via API, e será mostrado aqui nesse documento.
+Essa estrutura é altamente escalável e você pode adicionar suas regras personalizadas com facilidade, e no final dos testes você consegue um relatório rápido e limpo. A ferramenta pode ser utilizada tanto para Android e IOS, e suporta o binário (APK e IPA), e códigos-fontes compactados. O MobSF também pode ser usado via API, e vamos mostrar isso daqui a pouquinho.
 
 ### Primeiros passos  
 
-Para funcionar e rodar MobSF com sucesso, os próximos passos terão que ser seguidos e as ferramentas que deverão estar instaladas:
+Para funcionar e rodar MobSF com sucesso é só seguir os próximos passos. Vamos lá?
 
 Faça o download do Oracle JDK 1.7 (ou superior) - **[Java JDK Download](http://www.oracle.com/technetwork/java/javase/downloads/index.html)**  
-Faça o git clone do repositório do MobSF, o mesmo estará alguns scripts que precisarão ser executados. Logo após entre no repositório (como mostra abaixo).
+Faça o git clone do repositório do MobSF, no qual estarão alguns scripts que precisam ser executados. Depois disso, entre no repositório.
 
 ```
 git clone https://github.com/MobSF/Mobile‐Security‐Framework‐MobSF.git
 cd Mobile‐Security‐Framework‐MobSF
 ```
-Faça a **[instalação do Python](https://www.python.org/downloads/)** (2.7 ou superior), pois os scripts são em Python, e rode o comando em seguida para que as dependencias possam ser instaladas, siga os passos abaixo:
+
+Faça a **[instalação do Python](https://www.python.org/downloads/)** (2.7 ou superior), pois os scripts são em Python, e rode o comando abaixo para que as dependências possam ser instaladas:
 
 ```
 sudo apt install build‐essential libssl‐dev libffi‐dev python‐dev
@@ -42,21 +39,22 @@ O comando a seguir permite que você rode o MobSF:
 python manage.py runserver
 ```
 
-Ao executar esse comando o mesmo irá gerar um Token (esse token sempre será o mesmo na máquina onde ele estiver), o token será utilizado para que possamos fazer a análise via API, portanto, é importante deixa-lo guardado.
+Ao executar esse comando ele vai gerar um Token, que sempre será o mesmo em qualquer máquina que ele estiver. Ele vai ser usado para podermos fazer a análise via API, portanto deixa guardado.
 
 ### MobSF com Docker
+
 Faça a instalação do Docker  
 **[Documetação](https://docs.docker.com/)**  
 **[Instalação](https://docs.docker.com/engine/installation/linux/ubuntu/)**
 
-Para subir a imagem da ferramenta, basta seguir os passos abaixo:
-Faça o clone do repositório, caso não tenha-o feito ainda:
+E agora vamos subir a imagem da ferramenta. Faça o clone do repositório, caso não tenha feito ainda:
 
 ```
 git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
 ```
 
-Assim que o repositório for clonado, entre na pasta do mesmo, e execute os comandos a seguir:
+Assim que o repositório for clonado entre na pasta dele e execute estes comandos:
+
 ```
 docker build -t mobsf .
 docker run -it -p 8000:8000 mobsf
@@ -68,36 +66,39 @@ docker run -it -p 8000:8000 opensecurity/mobile-security-framework-mobsf:latest
 ```
 
 ### REST API
-Abaixo será mostrado como podemos fazer a analise, e gerar o report via API, para isso basta seguir os passo abaixo:
-O comando a seguir faz o upload para o MobSF, onde poderá ser visto no browser.
+
+Agora vou mostrar como fazer a análise e gerar o report via API. 
+O comando a seguir faz o upload para o MobSF, que poderá ser visto no browser.
 
 ```
 curl -F 'file=@/<path>/<apk>.apk' http://localhost:8000/api/v1/upload -H "Authorization: <Token>"
 ```
 
-O "<Token>", é o mesmo que é gerado quando rodamos o MobSF.
-Quando o comando for executado será gerado um hash (esse hash será diferente para cada apk/ipa) onde também terá que ser guardado, para que possamos utilizar para fazer o scan e report.
-Para fazer o scan do apk, basta executar o comando a seguir:
+O "<Token>" é o mesmo que é gerado quando rodamos o MobSF.
+Quando o comando for executado será gerado um hash (que será diferente para cada APK/IPA), que também tem que ser guardado para que possamos utilizar para fazer o scan e report.
+Para fazer o scan do apk o comando é este:
 
 ```
 curl -X POST --url http://localhost:8000/api/v1/scan --data "scan_type=apk&file_name=<apk>.apk&hash=<hash>" -H "Authorization: <Token>"
 
 ```
 
-E por fim e não menos importante, gerar o report:
+Por fim, mas não menos importante, para gerar o report:
 ```
 curl -X POST --url http://localhost:8000/api/v1/delete_scan --data "hash=<hash>" -H "Authorization:<Token>" -o <name_report>.pdf
 
 ```
 
 ### POC do MobSF com GitlabCI
-Antes de qualquer coisa acesse o **[link](Link do blog do Leandro)** para saber como colocar o mesmo pra rodar.
 
-Foi criado três jobs, cada job foi feito um script para acessar a API.
-Primeiros passos é configurar as variaveis que serão utilizadas, nesse caso, o Token, e a url do MobSF, segue abaixo os passos para a criação das variaveis:
+Antes de entrar neste tópico, acesse este post **[link](Link do blog do Leandro)** para saber como colocar o Gitlab CI pra rodar.
+
+Foram criados três jobs, e para cada um deles foi feito um script para acessar a API.
+O primeiro passo é configurar as variáveis que serão utilizadas, neste caso o Token e a url do MobSF. Para isso, siga os passos:
+
 Projects >> Settings >> Pipelines >> Add new variable
 
-Iniciando o YAML:
+Para iniciar o YAML:
 
 ```
 # Job da pipeline
@@ -110,7 +111,7 @@ stages:
 
 ##### Jobs  
 ###### Upload  
-Abaixo as configurações do job para que seja feito o upload do arquivo para o MobSF:
+Aqui tem as configurações do job para que o upload do arquivo para o MobSF seja feito:
 ```
 # Arquivo .gitlab-ci.yml
 upload:
@@ -124,7 +125,9 @@ upload:
     - hash
     - apk
 ```
-Script para fazer o upload da APK para o MobSF via API:
+
+E aqui está o script para fazer o upload da APK para o MobSF via API:
+
 ```
 #!/bin/bash
 # Upload a new APK to MobSF
@@ -138,9 +141,9 @@ curl -F "file=@/builds/lucas.mucheroni/MobSF/$APK" "$URL"/api/v1/upload -H "Auth
 
 ```
 
-
 ###### Scan  
-Job para fazer o scan do APK, segue abaixo como é feito:
+O job para fazer o scan do APK:
+
 ```
 # Arquivo .gitlab-ci.yml
 
@@ -155,7 +158,9 @@ scan:
     - hash
     - apk
 ```
-O script abaixo faz o scan do APK que foi feito upload no job anterior, segue abaixo o script:
+
+Este script faz o scan do APK que foi feito upload no job anterior:
+
 ```
 #!/bin/bash
 # Scan APK
@@ -168,7 +173,8 @@ curl -X POST --url $URL/api/v1/scan --data "scan_type=apk&file_name=$APK&hash=$h
 ```
 
 ###### Report
-Por último e não menos importante, gerar o report do através do scan que foi feito no job anterior, segue abaixo o job:
+Por último, vamos gerar o report por meio do scan que foi feito no job anterior:
+
 ```
 # Arquivo .gitlab-ci.yml
 
@@ -185,7 +191,9 @@ report:
     - /builds/lucas.mucheroni/MobSF/*.pdf # Arquiva o report e fica disponivel para download até uma semana.
     expire_in: 1 week
 ```
-Abaixo o script para gerar o report do scan feito, o mesmo também é feito via API, segue abaixo:
+
+Script para gerar o report do scan, que também é feito via API:
+
 ```
 #!/bin/bash
 # Report
@@ -198,18 +206,22 @@ curl -X POST --url $URL/api/v1/download_pdf --data "hash=$hash&scan_type=apk" -H
 
 ```
 
-Finalizando os scripts e o yaml o seu repositório terá que ficar como mostra o print abaixo:
+Para finalizar, os scripts e o yaml do seu repositório têm que ficar assim:
 
 ![Repo](images/repo.png)
 
-Lembrando que a apk se localiza no repositório do próprio MobSF (Mobile-Security-Framework-MobSF/StaticAnalyzer/test_files).
+Lembrando que a APK está no repositório do próprio MobSF (Mobile-Security-Framework-MobSF/StaticAnalyzer/test_files).
 
-Segue abaixo toda a documentação completa do MobSF:  
+E se você quiser saber mais, aqui tem a documentação completa do MobSF:
+
 **[Documentação](https://github.com/MobSF/Mobile-Security-Framework-MobSF/wiki/1.-Documentation#configuring-dynamic-analyzer-with-with-mobsf-android-412-arm-emulator)**  
 **[REST API](https://github.com/MobSF/Mobile-Security-Framework-MobSF/wiki/3.-REST-API-Documentation)**  
 **[Docker](https://github.com/MobSF/Mobile-Security-Framework-MobSF/wiki/7.-Docker-Container-for-MobSF-Static-Analysis)**  
 **[Repositório MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF)**  
 
-Bom, é isso galera, dúvidas e sugestões são muito bem-vindas, use os campos abaixo para isso. :smile:
+E é isso! Dúvidas e sugestões são muito bem-vindas, só usar os campos abaixo. :smile: Até a próxima! :wave:
 
-Até a próxima! :wave:
+--
+
+Quer trabalhar com DevOps de verdade? [Acesse aqui](https://jobs.kenoby.com/concrete). 
+
