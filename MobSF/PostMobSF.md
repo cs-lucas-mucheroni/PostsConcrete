@@ -67,7 +67,7 @@ docker run -it -p 8000:8000 opensecurity/mobile-security-framework-mobsf:latest
 
 ### REST API
 
-Agora vou mostrar como fazer a análise e gerar o report via API. 
+Agora vou mostrar como fazer a análise e gerar o report via API.
 O comando a seguir faz o upload para o MobSF, que poderá ser visto no browser.
 
 ```
@@ -91,7 +91,7 @@ curl -X POST --url http://localhost:8000/api/v1/delete_scan --data "hash=<hash>"
 
 ### POC do MobSF com GitlabCI
 
-Antes de entrar neste tópico, acesse este post **[link](Link do blog do Leandro)** para saber como colocar o Gitlab CI pra rodar.
+Antes de entrar neste tópico, acesse **[este post](https://concrete.com.br/2018/02/15/conheca-o-gitlab-ci/)** para saber como colocar o Gitlab CI pra rodar.
 
 Foram criados três jobs, e para cada um deles foi feito um script para acessar a API.
 O primeiro passo é configurar as variáveis que serão utilizadas, neste caso o Token e a url do MobSF. Para isso, siga os passos:
@@ -223,5 +223,4 @@ E é isso! Dúvidas e sugestões são muito bem-vindas, só usar os campos abaix
 
 --
 
-Quer trabalhar com DevOps de verdade? [Acesse aqui](https://jobs.kenoby.com/concrete). 
-
+Quer trabalhar com DevOps de verdade? [Acesse aqui](https://jobs.kenoby.com/concrete).
